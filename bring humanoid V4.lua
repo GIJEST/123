@@ -1,4 +1,3 @@
--- 👇 중복 NPC 이름 제거, 필터링 적용, Anchor 개선 반영됨
 local lp = game.Players.LocalPlayer
 local rs = game:GetService("RunService")
 local uis = game:GetService("UserInputService")

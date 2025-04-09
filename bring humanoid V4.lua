@@ -86,8 +86,29 @@ mover.InputBegan:Connect(function(i)
 		offset = Vector2.new(i.Position.X, i.Position.Y) - Vector2.new(frame.Position.X.Offset, frame.Position.Y.Offset)
 	end
 end)
+
 uis.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 then dragging = false end end)
 uis.InputChanged:Connect(function(i)
+	if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then
+		local p = Vector2.new(i.Position.X, i.Position.Y) - offset
+		frame.Position = UDim2.new(0, p.X, 0, p.Y)
+	end
+end)
+
+local bottomMover = Instance.new("Frame", frame)
+bottomMover.Size = UDim2.new(1, 0, 0, 20)
+bottomMover.Position = UDim2.new(0, 0, 1, -20)
+bottomMover.BackgroundTransparency = 1
+bottomMover.ZIndex = 10
+
+bottomMover.InputBegan:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		offset = Vector2.new(i.Position.X, i.Position.Y) - Vector2.new(frame.Position.X.Offset, frame.Position.Y.Offset)
+	end
+end)
+
+bottomMover.InputChanged:Connect(function(i)
 	if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then
 		local p = Vector2.new(i.Position.X, i.Position.Y) - offset
 		frame.Position = UDim2.new(0, p.X, 0, p.Y)
@@ -206,7 +227,7 @@ status.BorderSizePixel = 0
 
 local anchorBtn = Instance.new("TextButton", frame)
 anchorBtn.Size = UDim2.new(0, 80, 0, 24)
-anchorBtn.Position = UDim2.new(1, -90, 1, -100)
+anchorBtn.Position = UDim2.new(0, 10, 1, -34)
 anchorBtn.Text = "Anchor"
 anchorBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 anchorBtn.TextColor3 = Color3.new(1, 1, 1)
